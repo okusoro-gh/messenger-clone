@@ -22,7 +22,7 @@
           <%= @room.name %>
           <% @room.messages.each do |message| %>
               <div>
-                <%= message.send(:context) %>
+                <%= message.content %> - <%= message.user.username %>
               </div>
           <% end %>
           <div class="chat-box">
