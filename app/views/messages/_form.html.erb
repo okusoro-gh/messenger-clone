@@ -1,4 +1,4 @@
-au<%= form_with(model: message, local: true) do |form| %>
+<%= form_with(model: message, local: true) do |form| %>
   <% if message.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(message.errors.count, "error") %> prohibited this message from being saved:</h2>
@@ -16,15 +16,7 @@ au<%= form_with(model: message, local: true) do |form| %>
     <%= form.text_area :context %>
   </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :room_id %>
-    <%= form.text_field :room_id %>
-  </div>
+  <%= form.hidden_field :room_id, value: room.id %>
 
   <div class="actions">
     <%= form.submit %>

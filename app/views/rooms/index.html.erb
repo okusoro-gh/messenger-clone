@@ -1,4 +1,6 @@
 
+<h1> Hello <%= current_user.username %> </h1>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-3">
@@ -15,7 +17,13 @@
       <% end %>
     </div>
     <div class="col-9">
-
+      <% if @room.present? %>
+        <div class="chat-room">
+          <div class="chat-box">
+            <%= render 'messages/form', message: Message.new , room: @room %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
