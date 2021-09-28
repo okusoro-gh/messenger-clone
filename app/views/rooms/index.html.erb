@@ -19,6 +19,12 @@
     <div class="col-9">
       <% if @room.present? %>
         <div class="chat-room">
+          <%= @room.name %>
+          <% @room.messages.each do |message| %>
+              <div>
+                <%= message.send(:context) %>
+              </div>
+          <% end %>
           <div class="chat-box">
             <%= render 'messages/form', message: Message.new , room: @room %>
           </div>
