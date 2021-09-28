@@ -1,0 +1,21 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      <%= render 'rooms/form', room: Room.new %>
+      <hr>
+      <% @rooms.each do |room| %>
+        <%= link_to room do %>
+          <div class="card mb-2">
+            <div class="card-body">
+              <%= room.name %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-9">
+
+    </div>
+  </div>
+</div>
