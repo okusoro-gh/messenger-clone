@@ -1,6 +1,3 @@
-
-<h1> Hello <%= current_user.username %> </h1>
-
 <div class="container-fluid">
   <div class="row">
     <div class="col-3">
@@ -19,21 +16,19 @@
     <div class="col-9">
       <% if @room.present? %>
         <div class="chat-room">
-          <span class="navbar navbar-light bg-light">
+          <nav class="navbar navbar-light bg-light mb-4">
             <%= @room.name %>
-          </span>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                Hello <%= current_user.username %>
+              </li>
+            </ul>
+          </nav>
+          <div id="messages">
           <% @room.messages.each do |message| %>
-              <div class="message mb-2 <%= 'me'if message.user == current_user %>" >
-                <div class="content-container">
-                  <div class="content">
-                    <%= message.content %>
-                  </div>
-                  <div class="author">
-                    <%= message.user.username %>
-                  </div>
-              </div>
-            </div>
+              <%= render 'messages/message', message: message %>
           <% end %>
+          </div>
           <div class="chat-box">
             <%= render 'messages/form', message: Message.new , room: @room %>
           </div>
