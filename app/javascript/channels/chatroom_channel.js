@@ -1,8 +1,14 @@
 import consumer from "./consumer"
+import subscription from "@rails/actioncable/src/subscription";
 
 document.addEventListener('turbolinks:load', () => {
   const roomElement = document.getElementById('room-id');
   const roomId = Number(roomElement.getAttribute('data-room-id'));
+
+  //Unsubscribe from all subscriptions
+  consumer.subscriptions.subscriptions.forEach(subscription => {
+    consumer.subscriptions.remove(subscription)
+  });
 
   consumer.subscriptions.create({ channel: "ChatroomChannel", room_id: roomId }, {
     connected() {
