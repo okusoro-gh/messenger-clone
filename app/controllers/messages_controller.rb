@@ -22,16 +22,10 @@ class MessagesController < ApplicationController
   # POST /messages or /messages.json
   def create
     @message = Message.new(message_params)
+    @message.user = current_user
+    @message.save
 
-    respond_to do |format|
-      if @message.save
-        format.html { redirect_to @message, notice: "Message was successfully created." }
-        format.json { render :show, status: :created, location: @message }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
-      end
-    end
+    SendMessageJob.perform_later(@message)
   end
 
   # PATCH/PUT /messages/1 or /messages/1.json
@@ -64,6 +58,6 @@ class MessagesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def message_params
-      params.require(:message).permit(:context, :user_id, :room_id)
+      params.require(:message).permit(:content, :user_id, :room_id)
     end
 end
