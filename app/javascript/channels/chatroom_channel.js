@@ -1,7 +1,21 @@
 import consumer from "./consumer"
-import subscription from "@rails/actioncable/src/subscription";
+import EmojiParser from "../emoji_parser";
 
 document.addEventListener('turbolinks:load', () => {
+
+  const input = document.getElementsByClassName("input-group")[0].children[0];
+
+  input.addEventListener('change', (e)=> {
+    const regex = /:([\w])+:/g;
+    const lastChar = e.target.value[e.target.value.length - 1];
+    if(lastChar === ':') {
+      alert("Hi");
+    }
+  });
+
+  const messageList = document.getElementById("messages");
+  messageList.innerHTML = new EmojiParser(messageList.innerHTML).parse();
+
   const roomElement = document.getElementById('room-id');
   const roomId = Number(roomElement.getAttribute('data-room-id'));
 
@@ -34,18 +48,20 @@ document.addEventListener('turbolinks:load', () => {
         html = data.their_message;
       }
 
-      const messages = document.getElementById("messages");
-      console.log(messages.innerHTML);
-      messages.innerHTML = messages.innerHTML + html;
-      console.log(messages.innerHTML);
-      console.log(data);
-    }
-  });
+      const parsedMessage = new EmojiParser(html).parse();
+      const messageList = document.getElementById("messages");
+      const parsedOldMessages = new EmojiParser(messageList.innerHTML).parse();
 
-  const emojiParser = (message) => {
-    var emoji = /:([\w\d_])+:/g
-    const matchedEmojis = message.matchAll(emoji);
-  }
+      messageList.innerHTML = parsedOldMessages + parsedMessage;
+
+      this.clearInput();
+    },
+
+    clearInput() {
+      document.getElementsByClassName("input-group")[0].children[0].value = '';
+    }
+
+  });
 
 })
 
