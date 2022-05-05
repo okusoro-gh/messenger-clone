@@ -1,9 +1,13 @@
 .chat-room {
   height: 100vh;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  #messages {
+    flex-grow: 1;
+  }
   .message {
     min-height: 59px;
-
     .content-container {
       display: inline-block;
       .content {
@@ -29,15 +33,13 @@
     }
   }
   .chat-box {
-    position: absolute;
-    bottom: 0;
     padding: 20px;
     input[type=text] {
       height: 45px;
       font-size: 18px;
       padding: 8px;
     }
-    width: calc(100% - 200px);
+    width: 100%;
     .btn {
       height: 45px;
     }

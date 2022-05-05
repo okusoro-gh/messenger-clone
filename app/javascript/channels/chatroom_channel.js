@@ -42,6 +42,11 @@ document.addEventListener('turbolinks:load', () => {
     }
   });
 
+  const emojiParser = (message) => {
+    var emoji = /:([\w\d_])+:/g
+    const matchedEmojis = message.matchAll(emoji);
+  }
+
 })
 
 
